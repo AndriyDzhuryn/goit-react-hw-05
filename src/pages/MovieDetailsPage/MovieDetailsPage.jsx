@@ -5,22 +5,29 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import { fetchMovieDetails } from '../../API/requests-api.js';
 
 import css from './MovieDetailsPage.module.css';
+import Loader from '../../components/Loader/Loader.jsx';
 
 const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loader, setLoader] = useState(false);
+
   const { movieId } = useParams();
+
   const location = useLocation();
   const backLinkHref = location.state ?? '/movies';
 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
+        setLoader(true);
         setErrorMessage(null);
         const results = await fetchMovieDetails(movieId);
         setMovieDetails(results);
       } catch (error) {
         setErrorMessage(error.message);
+      } finally {
+        setLoader(false);
       }
     };
     fetchMovie();
@@ -41,6 +48,8 @@ const MovieDetailsPage = () => {
           <span>{errorMessage}</span>
         </p>
       )}
+
+      {loader && <Loader />}
 
       <div className={css.dataMovieWrapper}>
         <img

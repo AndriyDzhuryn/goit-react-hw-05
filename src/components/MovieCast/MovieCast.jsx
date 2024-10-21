@@ -4,21 +4,26 @@ import { useParams } from 'react-router-dom';
 import { fetchMovieSearchCredits } from '../../API/requests-api.js';
 
 import css from './MovieCast.module.css';
+import Loader from '../Loader/Loader.jsx';
 
 const MovieCast = () => {
   const [movieCasts, setMovieCasts] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const { movieId } = useParams();
 
   useEffect(() => {
     const fetchMovieCast = async () => {
       try {
+        setLoader(true);
         setErrorMessage(null);
         const results = await fetchMovieSearchCredits(movieId);
         setMovieCasts(results);
       } catch (error) {
         setErrorMessage(error.message);
+      } finally {
+        setLoader(false);
       }
     };
     fetchMovieCast();
@@ -32,6 +37,8 @@ const MovieCast = () => {
           <span>{errorMessage}</span>
         </p>
       )}
+
+      {loader && <Loader />}
 
       <ul className={css.castList}>
         {movieCasts.map(cast => {

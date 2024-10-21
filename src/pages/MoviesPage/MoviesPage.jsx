@@ -7,11 +7,13 @@ import MovieList from '../../components/MovieList/MovieList.jsx';
 import { fetchMoviesSearch } from '../../API/requests-api.js';
 
 import css from './MoviesPage.module.css';
+import Loader from '../../components/Loader/Loader.jsx';
 
 const Movies = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [foundMovies, setFoundMovies] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -24,11 +26,14 @@ const Movies = () => {
       }
 
       try {
+        setLoader(true);
         setErrorMessage(null);
         const data = await fetchMoviesSearch(searchWord);
         setFoundMovies(data);
       } catch (error) {
         setErrorMessage(error.message);
+      } finally {
+        setLoader(false);
       }
     };
     fetchSearch();
@@ -68,6 +73,8 @@ const Movies = () => {
           <span>{errorMessage}</span>
         </p>
       )}
+
+      {loader && <Loader />}
 
       {foundMovies && <MovieList movies={foundMovies} />}
     </div>

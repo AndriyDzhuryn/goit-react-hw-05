@@ -4,21 +4,26 @@ import { useParams } from 'react-router-dom';
 import { fetchMovieSearchReviews } from '../../API/requests-api.js';
 
 import css from './MovieReviews.module.css';
+import Loader from '../Loader/Loader.jsx';
 
 const MovieReviews = () => {
   const [movieReviews, setMovieReviews] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const { movieId } = useParams();
 
   useEffect(() => {
     const fetchMovieCast = async () => {
       try {
+        setLoader(true);
         setErrorMessage(null);
         const results = await fetchMovieSearchReviews(movieId);
         setMovieReviews(results);
       } catch (error) {
         setErrorMessage(error.message);
+      } finally {
+        setLoader(false);
       }
     };
     fetchMovieCast();
@@ -28,6 +33,8 @@ const MovieReviews = () => {
 
   return (
     <div className={css.reviewsWrapper}>
+      {loader && <Loader />}
+
       {movieReviews?.length > 0 &&
         movieReviews.map(review => {
           return (
