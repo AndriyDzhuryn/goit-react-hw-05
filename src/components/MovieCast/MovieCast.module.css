@@ -1,0 +1,29 @@
+.error {
+  font-size: 26px;
+  text-align: center;
+  color: red;
+}
+
+.castList {
+  margin: 0;
+}
+
+.castListItem {
+  box-shadow: 0px 15px 10px -15px gray;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.fotoActor {
+  padding-bottom: 10px;
+}
+
+.actorName {
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+.actorCharacter {
+  margin: 0;
+  font-weight: 500;
+}

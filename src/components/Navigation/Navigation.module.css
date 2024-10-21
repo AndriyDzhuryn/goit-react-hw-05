@@ -1,0 +1,33 @@
+.header {
+  padding: 30px;
+  box-shadow: 0 3px 5px grey;
+}
+
+.navWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoWrapper {
+  width: 60px;
+  height: 60px;
+}
+
+.nav {
+  display: flex;
+  gap: 30px;
+}
+
+.link {
+  font-size: 30px;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: red;
+}
+
+.active {
+  color: red;
+}

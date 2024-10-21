@@ -1,0 +1,98 @@
+.btnGoBackWrapper {
+  padding: 10px 0;
+  font-size: 16px;
+  padding-left: 20px;
+}
+
+.error {
+  font-size: 26px;
+  text-align: center;
+  color: red;
+}
+
+.dataMovieWrapper {
+  display: flex;
+  box-shadow: 0px 15px 10px -15px gray;
+  padding: 0 10px 10px 20px;
+  margin-bottom: 20px;
+}
+
+.descriptionMovieWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.title {
+  margin: 0;
+  padding: 10px 0 20px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  font-weight: 800;
+  font-size: 24px;
+}
+
+.descriptionPopulation {
+  margin: 0;
+  padding-bottom: 20px;
+  font-weight: 500;
+}
+
+.overvewTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+
+.descriptionOvervew {
+  margin: 0;
+  padding-bottom: 20px;
+  font-weight: 500;
+}
+
+.genresTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+
+.genresWrapper {
+  display: flex;
+  gap: 5px;
+}
+
+.genre {
+  margin: 0;
+  font-weight: 500;
+}
+
+.genre:not(:last-child)::after {
+  content: ',';
+}
+
+.edditionalInformationWrapper {
+  padding-left: 20px;
+}
+
+.edditionalInformationTitle {
+  margin: 0;
+  font-weight: 500;
+  padding-bottom: 20px;
+}
+
+.edditionalInformationList {
+  box-shadow: 0px 15px 10px -15px gray;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+}
+
+.edditionalInformationListItem {
+  text-decoration: underline;
+  font-size: 18px;
+}
+
+.edditionalInformationListItem:hover {
+  text-decoration: none;
+}
