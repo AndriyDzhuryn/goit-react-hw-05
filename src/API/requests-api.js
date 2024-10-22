@@ -19,12 +19,12 @@ export const fetchMoviesTrending = async () => {
   return data.results;
 };
 
-export const fetchMoviesSearch = async searchWord => {
+export const fetchMoviesSearch = async (searchWord, page) => {
   const options = {
-    params: { query: `${searchWord}`, include_adult: false, page: 1 },
+    params: { query: `${searchWord}`, include_adult: false, page: page },
   };
   const { data } = await movieInstance.get('/search/movie', options);
-  return data.results;
+  return data;
 };
 
 //

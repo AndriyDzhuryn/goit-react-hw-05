@@ -1,12 +1,14 @@
 .header {
-  padding: 30px;
-  box-shadow: 0 3px 5px grey;
+  padding: 30px 0;
+  box-shadow: 0px 15px 10px -15px black;
+  background-color: #fff;
 }
 
 .navWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 30px;
 }
 
 .logoWrapper {

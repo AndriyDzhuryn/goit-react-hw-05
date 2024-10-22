@@ -29,8 +29,6 @@ const MovieReviews = () => {
     fetchMovieCast();
   }, [movieId]);
 
-  console.log(movieReviews);
-
   return (
     <div className={css.reviewsWrapper}>
       {loader && <Loader />}

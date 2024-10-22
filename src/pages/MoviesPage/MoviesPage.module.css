@@ -1,5 +1,5 @@
 .searchMovieForm {
-  padding-top: 30px;
+  padding-top: 20px;
   padding-bottom: 10px;
   box-shadow: 0 2px 5px grey;
   margin-bottom: 20px;
@@ -33,4 +33,33 @@
   font-size: 26px;
   text-align: center;
   color: red;
+}
+
+.btnLoadMoreWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.btnLoadMore {
+  display: flex;
+  align-items: center;
+  background-color: blue;
+  color: white;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+}
+
+.iconLoadMore {
+  width: 40px;
+  height: 40px;
+}
+
+.up {
+  background-color: blue;
+  font-size: 30px;
+  color: white;
+  border: 10px solid blue;
+  border-radius: 50%;
 }

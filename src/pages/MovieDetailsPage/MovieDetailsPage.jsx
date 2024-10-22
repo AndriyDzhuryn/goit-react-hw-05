@@ -1,11 +1,18 @@
-import { Suspense, useEffect, useState } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
 import { fetchMovieDetails } from '../../API/requests-api.js';
 
 import css from './MovieDetailsPage.module.css';
 import Loader from '../../components/Loader/Loader.jsx';
+import ScrollToTop from 'react-scroll-up';
 
 const MovieDetailsPage = () => {
   const [movieDetails, setMovieDetails] = useState([]);
@@ -14,8 +21,17 @@ const MovieDetailsPage = () => {
 
   const { movieId } = useParams();
 
+  const navigate = useNavigate();
+
   const location = useLocation();
-  const backLinkHref = location.state ?? '/movies';
+  const backLink = useRef(location.state ?? '/movies');
+
+  const goBack = () => {
+    navigate(backLink.current);
+  };
+
+  const defaultImg =
+    'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -36,10 +52,10 @@ const MovieDetailsPage = () => {
   return (
     <div className={css.movieWrapper}>
       <div className={css.btnGoBackWrapper}>
-        <Link to={backLinkHref}>
+        <button type="submit" onClick={goBack}>
           <IoMdArrowRoundBack />
           Go back
-        </Link>
+        </button>
       </div>
 
       {errorMessage && (
@@ -54,13 +70,18 @@ const MovieDetailsPage = () => {
       <div className={css.dataMovieWrapper}>
         <img
           className={css.movieImg}
-          src={`https://image.tmdb.org/t/p/w500/${movieDetails.backdrop_path}`}
+          src={
+            movieDetails.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`
+              : defaultImg
+          }
+          width={500}
           alt={movieDetails.title}
         />
         <div className={css.descriptionMovieWrapper}>
           <h2 className={css.title}>{movieDetails.title}</h2>
           <p className={css.descriptionPopulation}>
-            Popularity: {movieDetails.popularity}
+            Rating: {movieDetails.vote_average}
           </p>
           <p className={css.overvewTitle}>Overview</p>
           <p className={css.descriptionOvervew}>{movieDetails.overview}</p>
@@ -84,12 +105,12 @@ const MovieDetailsPage = () => {
 
         <ul className={css.edditionalInformationList}>
           <li className={css.edditionalInformationListItem}>
-            <Link to="cast" state={backLinkHref}>
+            <Link to="cast" state={{ from: backLink.current.from }}>
               Cast
             </Link>
           </li>
           <li className={css.edditionalInformationListItem}>
-            <Link to="reviews" state={backLinkHref}>
+            <Link to="reviews" state={{ from: backLink.current.from }}>
               Reviews
             </Link>
           </li>
@@ -99,6 +120,10 @@ const MovieDetailsPage = () => {
           <Outlet />
         </Suspense>
       </div>
+
+      <ScrollToTop showUnder={160}>
+        <span className={css.up}>UP</span>
+      </ScrollToTop>
     </div>
   );
 };

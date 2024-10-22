@@ -96,3 +96,11 @@
 .edditionalInformationListItem:hover {
   text-decoration: none;
 }
+
+.up {
+  background-color: blue;
+  font-size: 30px;
+  color: white;
+  border: 10px solid blue;
+  border-radius: 50%;
+}

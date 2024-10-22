@@ -7,7 +7,7 @@ const buildLinkClass = ({ isActive }) => {
   return clsx(css.link, isActive && css.active);
 };
 
-const Header = () => {
+const Navigation = () => {
   return (
     <header className={css.header}>
       <div className={css.navWrapper}>
@@ -34,4 +34,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navigation;

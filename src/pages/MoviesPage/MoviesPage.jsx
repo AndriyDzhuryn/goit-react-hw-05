@@ -8,28 +8,33 @@ import { fetchMoviesSearch } from '../../API/requests-api.js';
 
 import css from './MoviesPage.module.css';
 import Loader from '../../components/Loader/Loader.jsx';
+import { MdExpandMore } from 'react-icons/md';
+import ScrollToTop from 'react-scroll-up';
 
 const Movies = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [foundMovies, setFoundMovies] = useState(null);
+  const [foundMovies, setFoundMovies] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [pages, setPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const searchWord = searchParams.get('searchTerm');
+  const searchWord = searchParams.get('query');
 
   useEffect(() => {
     const fetchSearch = async () => {
       if (searchWord === null) {
         return;
       }
-
       try {
         setLoader(true);
         setErrorMessage(null);
-        const data = await fetchMoviesSearch(searchWord);
-        setFoundMovies(data);
+        const data = await fetchMoviesSearch(searchWord, 1);
+        setFoundMovies(data.results);
+        setTotalPages(data.total_pages);
+        setPages(2);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
@@ -48,7 +53,22 @@ const Movies = () => {
     if (searchTerm === '') {
       return;
     }
-    setSearchParams({ searchTerm });
+    setSearchTerm('');
+    setSearchParams({ query: searchTerm });
+  };
+
+  const handleClick = async () => {
+    try {
+      setLoader(true);
+      setErrorMessage(null);
+      setPages(pages + 1);
+      const data = await fetchMoviesSearch(searchWord, pages);
+      setFoundMovies([...foundMovies, ...data.results]);
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setLoader(false);
+    }
   };
 
   return (
@@ -74,9 +94,26 @@ const Movies = () => {
         </p>
       )}
 
+      {errorMessage === null && <MovieList movies={foundMovies} />}
+
       {loader && <Loader />}
 
-      {foundMovies && <MovieList movies={foundMovies} />}
+      {pages < totalPages && errorMessage === null && (
+        <div className={css.btnLoadMoreWrapper}>
+          <button
+            className={css.btnLoadMore}
+            type="submit"
+            onClick={handleClick}
+          >
+            <MdExpandMore className={css.iconLoadMore} />
+            Load more
+          </button>
+        </div>
+      )}
+
+      <ScrollToTop showUnder={160}>
+        <span className={css.up}>UP</span>
+      </ScrollToTop>
     </div>
   );
 };
